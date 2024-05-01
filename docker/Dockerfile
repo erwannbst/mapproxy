@@ -56,12 +56,14 @@ RUN apt-get -y --purge autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install uwsgi && \
+RUN pip install uwsgi pyproj && \
     pip cache purge
 
 COPY uwsgi.conf .
 
 COPY nginx-default.conf /etc/nginx/sites-enabled/default
+COPY origin-cert.pem /etc/ssl/certs/
+COPY origin-key.key /etc/ssl/private/
 
 EXPOSE 80
 
